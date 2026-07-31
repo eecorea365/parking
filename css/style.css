@@ -1,0 +1,190 @@
+/* ==========================================
+   Tesla QR Parking
+   Version : 4.0
+   Author : eecorea365
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --background:#090909;
+
+    --card:rgba(255,255,255,.08);
+
+    --border:rgba(255,255,255,.12);
+
+    --text:#ffffff;
+
+    --subtext:#b5b5b5;
+
+    --primary:#2563eb;
+
+    --success:#16a34a;
+
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-family:-apple-system,BlinkMacSystemFont,
+    "Segoe UI",Roboto,Arial,sans-serif;
+
+    color:var(--text);
+
+    background:
+    radial-gradient(circle at top,
+    #3a3a3a 0%,
+    #151515 40%,
+    #050505 100%);
+
+}
+
+.container{
+
+    width:92%;
+
+    max-width:430px;
+
+    padding:36px;
+
+    border-radius:28px;
+
+    background:var(--card);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid var(--border);
+
+    box-shadow:0 25px 50px rgba(0,0,0,.45);
+
+}
+
+.logo{
+
+    text-align:center;
+
+    font-size:54px;
+
+}
+
+.title{
+
+    text-align:center;
+
+    margin-top:10px;
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    letter-spacing:3px;
+
+}
+
+.subtitle{
+
+    text-align:center;
+
+    margin-top:8px;
+
+    color:var(--subtext);
+
+    margin-bottom:30px;
+
+}
+
+.status{
+
+    background:rgba(255,255,255,.05);
+
+    border-left:4px solid #22c55e;
+
+    border-radius:14px;
+
+    padding:18px;
+
+    line-height:1.8;
+
+    margin-bottom:28px;
+
+}
+
+.button{
+
+    display:block;
+
+    text-decoration:none;
+
+    text-align:center;
+
+    color:white;
+
+    font-size:21px;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    margin-top:16px;
+
+    transition:.25s;
+
+}
+
+.button:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 12px 30px rgba(255,255,255,.12);
+
+}
+
+.call{
+
+    background:var(--primary);
+
+}
+
+.sms{
+
+    background:var(--success);
+
+}
+
+.footer{
+
+    text-align:center;
+
+    margin-top:32px;
+
+    color:#8f8f8f;
+
+    line-height:1.7;
+
+    font-size:14px;
+
+}
+
+.version{
+
+    text-align:center;
+
+    margin-top:20px;
+
+    color:#666;
+
+    font-size:12px;
+
+}
