@@ -1,4 +1,4 @@
-const CACHE_NAME = "model-y-life-v9-dev2";
+const CACHE_NAME = "model-y-life-v9-dev5";
 
 const FILES_TO_CACHE = [
     "./",
@@ -9,6 +9,7 @@ const FILES_TO_CACHE = [
 
     "./js/script.js",
     "./js/config.js",
+    "./js/qrcode.min.js",
 
     "./icons/icon-192.png",
     "./icons/icon-512.png"
