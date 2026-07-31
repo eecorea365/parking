@@ -2,9 +2,6 @@ const phoneNumber = config.owner.phone;
 
 const smsMessage = config.message.sms;
 
-const status = config.vehicle.status;
-
-
 const callButton =
 document.getElementById("callButton");
 
@@ -28,19 +25,32 @@ smsButton.href =
 
 
 
-const current =
-config.statusMap[status];
+function updateStatus() {
 
+    const current =
+    config.statusMap[
+        config.vehicle.status
+    ];
 
+    statusCard.innerHTML = `
+        <h3>${current.emoji} ${current.title}</h3>
+        <br>
+        ${current.desc}
+    `;
 
-statusCard.innerHTML = `
+}
 
-<h3>
-${current.emoji} ${current.title}
-</h3>
+updateStatus();
 
-<br>
+function changeStatus(newStatus) {
 
-${current.desc}
+    config.vehicle.status = newStatus;
 
-`;
+    localStorage.setItem(
+        "vehicleStatus",
+        newStatus
+    );
+
+    updateStatus();
+
+}

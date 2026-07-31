@@ -10,7 +10,7 @@ const config = {
     // 차량 정보
     vehicle: {
         model: "Tesla Model Y",
-        status: "charging"
+        status: localStorage.getItem("vehicleStatus") || "charging"
     },
 
 
