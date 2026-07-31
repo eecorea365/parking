@@ -148,3 +148,20 @@ document.addEventListener("DOMContentLoaded", () => {
     `${APP_CONFIG.APP_NAME} ${APP_CONFIG.VERSION}`;
     }
 });
+
+// QR Code 생성
+
+const qrElement = document.getElementById("qrcode");
+
+if (qrElement) {
+
+    new QRCode(
+        qrElement,
+        {
+            text: window.location.href,
+            width: 180,
+            height: 180
+        }
+    );
+
+}
