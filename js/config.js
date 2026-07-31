@@ -1,3 +1,8 @@
+const APP_CONFIG = {
+    VERSION: "9.0-dev",
+    APP_NAME: "Model Y Life"
+};
+
 const config = {
 
     // 차량 소유자 정보

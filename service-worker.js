@@ -1,14 +1,18 @@
-const CACHE_NAME = "model-y-life-v8";
+const CACHE_NAME = "model-y-life-v8.1";
 
 const FILES_TO_CACHE = [
     "./",
     "./index.html",
-    "./style.css",
-    "./script.js",
-    "./config.js",
-    "./manifest.json"
-];
+    "./manifest.json",
 
+    "./css/style.css",
+
+    "./js/script.js",
+    "./js/config.js",
+
+    "./icons/icon-192.png",
+    "./icons/icon-512.png"
+];
 
 self.addEventListener(
     "install",

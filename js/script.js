@@ -84,3 +84,12 @@ if ("serviceWorker" in navigator) {
     );
 
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const version = document.getElementById("app-version");
+
+    if (version) {
+        version.textContent =
+    `${APP_CONFIG.APP_NAME} ${APP_CONFIG.VERSION}`;
+    }
+});

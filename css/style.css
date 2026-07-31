@@ -248,3 +248,25 @@ body{
     transform: translateY(-2px);
 
 }
+
+#app-version {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #888;
+    text-align: center;
+}
+
+#install-button {
+    margin-top: 12px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #1976d2;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#install-button:hover {
+    background-color: #1565c0;
+}
