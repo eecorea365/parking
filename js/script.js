@@ -82,6 +82,61 @@ if ("serviceWorker" in navigator) {
 
         }
     );
+}
+// PWA 설치 이벤트 처리
+
+let deferredPrompt;
+
+const installButton = document.getElementById("install-button");
+
+window.addEventListener(
+    "beforeinstallprompt",
+    event => {
+
+        // 기본 설치 팝업 막기
+        event.preventDefault();
+
+        // 나중에 버튼 클릭 시 사용
+        deferredPrompt = event;
+
+        // 설치 버튼 표시
+        if (installButton) {
+            installButton.hidden = false;
+        }
+
+    }
+);
+
+
+if (installButton) {
+
+    installButton.addEventListener(
+        "click",
+        async () => {
+
+            if (!deferredPrompt) {
+                return;
+            }
+
+            // 설치 팝업 표시
+            deferredPrompt.prompt();
+
+            // 사용자 선택 결과
+            const result = await deferredPrompt.userChoice;
+
+            console.log(
+                "설치 결과:",
+                result.outcome
+            );
+
+            // 다시 사용하지 않도록 초기화
+            deferredPrompt = null;
+
+            // 버튼 숨김
+            installButton.hidden = true;
+
+        }
+    );
 
 }
 
