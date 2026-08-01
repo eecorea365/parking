@@ -105,49 +105,104 @@ body{
 
 }
 
-.status{
+.status {
 
-    background:rgba(255,255,255,.05);
+    margin: 25px 0;
 
-    border-left:4px solid #22c55e;
+    padding: 22px;
 
-    border-radius:14px;
+    border-radius: 18px;
 
-    padding:18px;
+    background: rgba(255,255,255,0.08);
 
-    line-height:1.8;
+    border: 1px solid rgba(255,255,255,0.15);
 
-    margin-bottom:28px;
+    backdrop-filter: blur(10px);
 
-}
-
-.button{
-
-    display:block;
-
-    text-decoration:none;
-
-    text-align:center;
-
-    color:white;
-
-    font-size:21px;
-
-    padding:18px;
-
-    border-radius:15px;
-
-    margin-top:16px;
-
-    transition:.25s;
+    transition: all 0.3s ease;
 
 }
 
-.button:hover{
+.status h3 {
 
-    transform:translateY(-4px);
+    margin: 0 0 10px;
 
-    box-shadow:0 12px 30px rgba(255,255,255,.12);
+    font-size: 24px;
+
+    font-weight: 700;
+
+}
+
+.status.available {
+
+    border-left: 6px solid #2ecc71;
+
+}
+
+.status.charging {
+
+    border-left: 6px solid #3498db;
+
+}
+
+.status.shopping {
+
+    border-left: 6px solid #f39c12;
+
+}
+
+.status.meal {
+
+    border-left: 6px solid #9b59b6;
+
+}
+
+.status.driving {
+
+    border-left: 6px solid #95a5a6;
+
+}
+
+.button {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    width: 100%;
+
+    padding: 18px;
+
+    margin: 12px 0;
+
+    border-radius: 14px;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition: transform 0.15s ease,
+                box-shadow 0.2s ease,
+                opacity 0.2s ease;
+}
+
+.button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+
+}
+
+.button:active {
+
+    transform: scale(0.98);
 
 }
 
@@ -209,35 +264,29 @@ body{
 
 .status-buttons {
 
-    display: flex;
+    display: grid;
 
-    flex-wrap: wrap;
+    grid-template-columns: repeat(2, 1fr);
 
     gap: 10px;
 
-    justify-content: center;
+    margin-top: 15px;
 
 }
 
 .status-buttons button {
 
-    background: rgba(255,255,255,0.08);
+    padding: 14px;
 
-    color: white;
-
-    border: 1px solid rgba(255,255,255,0.15);
+    border: none;
 
     border-radius: 12px;
 
-    padding: 12px 18px;
-
     cursor: pointer;
 
-    font-size: 15px;
+    font-size: 16px;
 
-    transition: 0.25s;
-
-    min-width: 120px;
+    font-weight: 600;
 
 }
 
@@ -269,4 +318,89 @@ body{
 
 #install-button:hover {
     background-color: #1565c0;
+}
+
+.qr-section {
+
+    margin: 32px 0;
+
+    padding: 24px;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+    text-align: center;
+
+    color: #222;
+
+}
+
+.qr-title {
+
+    font-size: 22px;
+
+    font-weight: 700;
+
+    margin-bottom: 20px;
+
+    letter-spacing: 1px;
+
+}
+
+#qrcode {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-bottom: 20px;
+
+}
+
+#qrcode img,
+#qrcode canvas {
+
+    border: 8px solid white;
+
+    border-radius: 12px;
+
+}
+
+.qr-guide {
+
+    color: #666;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+
+}
+
+.last-update {
+
+    margin-top: 12px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    color: #b0b0b0;
+
+    opacity: 0.9;
+
+}
+
+.admin-update {
+
+    margin-top:15px;
+
+    font-size:13px;
+
+    color:#888;
+
+    text-align:center;
+
 }

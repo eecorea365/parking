@@ -32,9 +32,9 @@
         MODEL Y
     </div>
 
-    <div class="status" id="statusCard">
+    <div class="status" id="statusCard"></div>
 
-    </div>
+    <div class="last-update" id="lastUpdate"></div>
 
     <a
         id="callButton"
@@ -54,12 +54,17 @@
 
     </a>
 
-    <div class="status-control">
+    
+
+        <div class="status-control" id="admin-panel">
 
         <h3>현재 상태 변경</h3>
 
-        <div class="status-buttons">
+        <div class="admin-update" id="adminUpdate"></div>
 
+        <div class="status-buttons">
+        <div class="admin-update" id="adminUpdate"></div>
+        
             <button onclick="changeStatus('available')">
                 🟢 대기
             </button>
@@ -86,9 +91,16 @@
 
     <div class="qr-section">
 
-        <h3>📱 Model Y Life QR</h3>
+        <div class="qr-title">
+            🚗 차량 연락 QR
+        </div>
 
         <div id="qrcode"></div>
+
+        <div class="qr-guide">
+            📷 QR을 스캔하여<br>
+            연락해 주세요.
+        </div>
 
     </div>
 

@@ -25,7 +25,7 @@ smsButton.href =
 
 
 
-function updateStatus() {
+function updateStatus(){
 
     const current =
     config.statusMap[
@@ -38,22 +38,21 @@ function updateStatus() {
         ${current.desc}
     `;
 
+    renderLastUpdated();
+
+}
+
+const savedStatus =
+    localStorage.getItem("vehicleStatus");
+
+if (savedStatus) {
+
+    config.vehicle.status = savedStatus;
+
 }
 
 updateStatus();
-
-function changeStatus(newStatus) {
-
-    config.vehicle.status = newStatus;
-
-    localStorage.setItem(
-        "vehicleStatus",
-        newStatus
-    );
-
-    updateStatus();
-
-}
+renderAdminUpdated();
 
 if ("serviceWorker" in navigator) {
 
@@ -163,5 +162,148 @@ if (qrElement) {
             height: 180
         }
     );
+
+}
+
+// 관리자 모드 확인
+const adminPanel = document.getElementById("admin-panel");
+
+if (adminPanel) {
+
+    const params = new URLSearchParams(window.location.search);
+
+    const isAdmin = params.get("admin") === "1";
+
+    adminPanel.style.display = isAdmin ? "block" : "none";
+
+}
+
+function updateLastUpdated() {
+
+    const now = Date.now();
+
+    localStorage.setItem(
+        "lastUpdated",
+        now
+    );
+
+    renderLastUpdated();
+
+}
+function renderLastUpdated() {
+
+    const saved =
+        localStorage.getItem("lastUpdated");
+
+    if (!saved) return;
+
+    const diff =
+        Math.floor(
+            (Date.now() - Number(saved))
+            /1000
+        );
+
+    let text;
+
+    if (diff < 60) {
+
+        text = "🕒 방금 전";
+
+    } else if (diff < 3600) {
+
+        text =
+            `🕒 ${Math.floor(diff/60)}분 전`;
+
+    } else if (diff < 86400) {
+
+        text =
+            `🕒 ${Math.floor(diff/3600)}시간 전`;
+
+    } else {
+
+        text =
+            `🕒 ${Math.floor(diff/86400)}일 전`;
+
+    }
+
+    document
+        .getElementById("lastUpdate")
+        .textContent = text;
+
+}
+renderLastUpdated();
+
+setInterval(
+    renderLastUpdated,
+    60000
+);
+function changeStatus(newStatus) {
+
+    config.vehicle.status = newStatus;
+
+    localStorage.setItem(
+        "vehicleStatus",
+        newStatus
+    );
+
+    updateLastUpdated();
+
+    updateStatus();
+
+}
+
+const savedTime = localStorage.getItem("lastUpdated");
+
+if (savedTime) {
+
+    document.getElementById("lastUpdate").textContent =
+        "🕒 마지막 업데이트 : " + savedTime;
+
+}
+
+if (!localStorage.getItem("lastUpdated")) {
+
+    updateLastUpdated();
+
+}
+
+renderLastUpdated();
+
+setInterval(
+    renderLastUpdated,
+    60000
+);
+
+function renderAdminUpdated(){
+
+    const adminUpdate =
+        document.getElementById("adminUpdate");
+
+    if(!adminUpdate) return;
+
+    const saved =
+        localStorage.getItem("lastUpdated");
+
+    if(!saved) return;
+
+    const diff =
+        Math.floor(
+            (Date.now() - Number(saved)) / 1000
+        );
+
+    let text;
+
+    if(diff < 60){
+        text = "🕒 방금 전";
+    }
+    else if(diff < 3600){
+        text = `🕒 ${Math.floor(diff/60)}분 전`;
+    }
+    else{
+        text = `🕒 ${Math.floor(diff/3600)}시간 전`;
+    }
+
+    adminUpdate.textContent =
+        "마지막 변경 : " + text;
 
 }
