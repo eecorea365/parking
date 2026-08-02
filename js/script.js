@@ -1,4 +1,9 @@
+// 관리자 여부 확인 (전역 변수)
+const params = new URLSearchParams(window.location.search);
+const isAdmin = params.get("admin") === "1";
+
 const phoneNumber = config.owner.phone;
+
 
 const smsMessage = config.message.sms;
 
@@ -90,13 +95,14 @@ window.addEventListener(
         // 나중에 버튼 클릭 시 사용
         deferredPrompt = event;
 
-        // 설치 버튼 표시
-        if (installButton) {
+        // 관리자 모드일 때만 설치 버튼 표시
+        if (installButton && isAdmin) {
             installButton.hidden = false;
         }
 
     }
 );
+
 
 
 if (installButton) {
@@ -135,40 +141,46 @@ document.addEventListener("DOMContentLoaded", () => {
     const version = document.getElementById("app-version");
 
     if (version) {
-        version.textContent =
-    `${APP_CONFIG.APP_NAME} ${APP_CONFIG.VERSION}`;
+        if (isAdmin) {
+            version.textContent = `${APP_CONFIG.APP_NAME} ${APP_CONFIG.VERSION}`;
+            version.style.display = "block";
+        } else {
+            version.style.display = "none";
+        }
+    }
+
+    // 마지막 업데이트 시간 표시 제어 (관리자 전용)
+    const lastUpdateEl = document.getElementById("lastUpdate");
+    if (lastUpdateEl) {
+        lastUpdateEl.style.display = isAdmin ? "block" : "none";
     }
 });
 
-// QR Code 생성
 
+// QR Code 생성
 const qrElement = document.getElementById("qrcode");
 
 if (qrElement) {
+    // 관리자 파라미터(?admin=1)를 제외한 순수 URL 생성
+    const pureUrl = window.location.origin + window.location.pathname;
 
     new QRCode(
         qrElement,
         {
-            text: window.location.href,
+            text: pureUrl,
             width: 180,
             height: 180
         }
     );
-
 }
 
-// 관리자 모드 확인
+
+// 관리자 모드 패널 제어
 const adminPanel = document.getElementById("admin-panel");
-
 if (adminPanel) {
-
-    const params = new URLSearchParams(window.location.search);
-
-    const isAdmin = params.get("admin") === "1";
-
     adminPanel.style.display = isAdmin ? "block" : "none";
-
 }
+
 
 function updateLastUpdated() {
     const now = Date.now();
@@ -218,10 +230,12 @@ if (!localStorage.getItem("lastUpdated")) {
     updateLastUpdated();
 }
 
-renderLastUpdated();
-renderAdminUpdated();
-
-setInterval(() => {
+if (isAdmin) {
     renderLastUpdated();
     renderAdminUpdated();
-}, 60000);
+
+    setInterval(() => {
+        renderLastUpdated();
+        renderAdminUpdated();
+    }, 60000);
+}
