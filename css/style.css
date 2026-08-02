@@ -164,33 +164,33 @@ body{
 }
 
 .button {
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
-    gap: 10px;
-
+    gap: 12px;
     width: 100%;
-
-    padding: 18px;
-
-    margin: 12px 0;
-
-    border-radius: 14px;
-
-    font-size: 18px;
-
-    font-weight: 600;
-
+    padding: 22px; /* 크기 키움 */
+    margin: 14px 0;
+    border-radius: 18px;
+    font-size: 20px; /* 폰트 크기 키움 */
+    font-weight: 800; /* 더 두껍게 */
     text-decoration: none;
-
+    color: #ffffff !important; /* 글자색 흰색 강제 */
     transition: transform 0.15s ease,
                 box-shadow 0.2s ease,
                 opacity 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* 그림자 추가 */
 }
+
+.parking-time {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffd700; /* 황금색으로 강조 */
+    text-align: center;
+    display: none; /* 기본은 숨김 */
+}
+
 
 .button:hover {
 
