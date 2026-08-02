@@ -11,16 +11,23 @@ const config = {
         ]
     },
 
-    // 차량 소유자 정보
-    owner: {
-        name: "김범석",
-        phone: "01072607368"
+    // 연락 가능한 운전자 정보
+    contacts: {
+        owner: {
+            name: "김범석",
+            phone: "01072607368"
+        },
+        wife: {
+            name: "배우자",
+            phone: "01074869907"
+        }
     },
 
     // 차량 정보
     vehicle: {
         model: "Tesla Model Y",
-        status: "charging" // 기본값, script.js에서 localStorage 확인
+        status: "charging", // 기본값, script.js에서 localStorage 확인
+        contactId: "owner"
     },
 
 

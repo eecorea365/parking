@@ -60,16 +60,21 @@ export async function subscribeToVehicleStatus(onChange, onError) {
 }
 
 export async function saveVehicleStatus(status) {
+    return saveParkingState({ status });
+}
+
+export async function saveVehicleContact(contactId) {
+    return saveParkingState({ contactId });
+}
+
+async function saveParkingState(data) {
     const [api, statusDocument] = await Promise.all([
         getFirestoreApi(),
         getStatusDocument()
     ]);
     await api.setDoc(
         statusDocument,
-        {
-            status,
-            updatedAt: api.serverTimestamp()
-        },
+        { ...data, updatedAt: api.serverTimestamp() },
         { merge: true }
     );
 }

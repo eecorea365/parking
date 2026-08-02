@@ -421,3 +421,7 @@ body{
 .admin-auth-button:hover {
     background: #1d4ed8;
 }
+
+.admin-contact-title {
+    margin-top: 28px;
+}

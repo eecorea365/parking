@@ -1,5 +1,6 @@
 import {
     isFirebaseConfigured,
+    saveVehicleContact,
     saveVehicleStatus,
     subscribeToVehicleStatus
 } from "./firebase.js";
@@ -26,9 +27,6 @@ const buildLabel = /^[0-9a-f]{7,40}$/i.test(buildCommit)
 let authenticatedAdmin = false;
 let updateTimer;
 
-const phoneNumber = config.owner.phone;
-
-
 const smsMessage = config.message.sms;
 
 const callButton =
@@ -44,15 +42,18 @@ document.getElementById("statusCard");
 
 
 
-callButton.href =
-`tel:${phoneNumber}`;
+function renderContact() {
+    const contact = config.contacts[config.vehicle.contactId] || config.contacts.owner;
+    if (!contact) return;
 
+    callButton.href = `tel:${contact.phone}`;
+    smsButton.href = `sms:${contact.phone}?body=${encodeURIComponent(smsMessage)}`;
 
-
-smsButton.href =
-`sms:${phoneNumber}?body=${encodeURIComponent(smsMessage)}`;
-
-
+    const contactUpdate = document.getElementById("contactUpdate");
+    if (contactUpdate) {
+        contactUpdate.textContent = `현재 연락처 : ${contact.name} (${contact.phone})`;
+    }
+}
 
 // 상태 업데이트 및 렌더링 통합
 function updateStatus() {
@@ -62,6 +63,7 @@ function updateStatus() {
         <br>
         ${current.desc}
     `;
+    renderContact();
     renderLastUpdated();
     renderAdminUpdated();
 }
@@ -70,6 +72,10 @@ function updateStatus() {
 const savedStatus = !firebaseEnabled && localStorage.getItem("vehicleStatus");
 if (savedStatus && config.statusMap[savedStatus]) {
     config.vehicle.status = savedStatus;
+}
+const savedContact = !firebaseEnabled && localStorage.getItem("vehicleContactId");
+if (savedContact && config.contacts[savedContact]) {
+    config.vehicle.contactId = savedContact;
 }
 updateStatus();
 
@@ -281,6 +287,10 @@ function applyFirebaseStatus(data) {
         config.vehicle.status = data.status;
     }
 
+    if (config.contacts[data.contactId]) {
+        config.vehicle.contactId = data.contactId;
+    }
+
     if (data.updatedAt && typeof data.updatedAt.toMillis === "function") {
         localStorage.setItem("lastUpdated", data.updatedAt.toMillis());
     }
@@ -336,8 +346,28 @@ async function changeStatus(newStatus) {
     updateStatus();
 }
 
+async function changeContact(contactId) {
+    if (!authenticatedAdmin || !config.contacts[contactId]) return;
+
+    if (firebaseEnabled) {
+        try {
+            await saveVehicleContact(contactId);
+        } catch (error) {
+            console.error("Firebase 연락처 저장 실패", error);
+            alert("연락처를 저장하지 못했습니다. Firebase 설정과 연결을 확인해 주세요.");
+        }
+        return;
+    }
+
+    config.vehicle.contactId = contactId;
+    localStorage.setItem("vehicleContactId", contactId);
+    updateLastUpdated();
+    updateStatus();
+}
+
 // 인라인 관리자 버튼에서 호출할 수 있도록 공개한다.
 window.changeStatus = changeStatus;
+window.changeContact = changeContact;
 
 // 초기 실행 및 타이머
 if (!firebaseEnabled && !localStorage.getItem("lastUpdated")) {
