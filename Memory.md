@@ -42,6 +42,7 @@ v12.1
 - Firebase Firestore 모듈 분리
 - Google 로그인 기반 관리자 인증 구조 추가
 - 관리자 이메일 기반 상태 변경 권한 분리
+- admin.html 관리자 페이지 분리
 
 ## 현재 구조
 
@@ -59,9 +60,6 @@ service-worker.js
 - 리팩터링
 - 중복 CSS 제거
 - script.js 정리
-
-### v11
-- admin.html 분리
 
 ### v13
 - 관리자 로그인

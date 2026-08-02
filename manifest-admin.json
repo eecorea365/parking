@@ -1,7 +1,7 @@
 {
   "name": "Tesla QR Parking Admin",
   "short_name": "Tesla QR Admin",
-  "start_url": "./?admin=1",
+  "start_url": "./admin.html",
   "display": "standalone",
   "background_color": "#111111",
   "theme_color": "#111111",

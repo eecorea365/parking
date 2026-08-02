@@ -12,7 +12,12 @@ import {
 
 // 관리자 여부 확인 (전역 변수)
 const params = new URLSearchParams(window.location.search);
-const isAdminPage = params.get("admin") === "1";
+const isAdminPage = window.location.pathname.endsWith("/admin.html");
+
+// 기존 관리자 주소와 설치된 PWA를 새 관리자 페이지로 이동한다.
+if (!isAdminPage && params.get("admin") === "1") {
+    window.location.replace(new URL("./admin.html", window.location.href));
+}
 const firebaseEnabled = isFirebaseConfigured();
 const buildCommit = window.BUILD_INFO && window.BUILD_INFO.commit;
 const buildLabel = /^[0-9a-f]{7,40}$/i.test(buildCommit)
@@ -160,13 +165,18 @@ if (installButton) {
 const qrElement = document.getElementById("qrcode");
 
 if (qrElement) {
-    // 관리자 파라미터(?admin=1)를 제외한 순수 URL 생성
-    const pureUrl = window.location.origin + window.location.pathname;
+    // 관리자 페이지에서도 QR은 일반 사용자 페이지를 가리킨다.
+    const publicUrl = new URL(window.location.href);
+    publicUrl.search = "";
+    publicUrl.hash = "";
+    if (isAdminPage) {
+        publicUrl.pathname = publicUrl.pathname.replace(/admin\.html$/, "index.html");
+    }
 
     new QRCode(
         qrElement,
         {
-            text: pureUrl,
+            text: publicUrl.toString(),
             width: 180,
             height: 180
         }

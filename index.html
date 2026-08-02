@@ -15,16 +15,7 @@
         commit: "{{ site.github.build_revision | slice: 0, 7 }}"
     };
 </script>
-<script>
-    // 관리자 모드로 설치한 PWA는 관리자 URL에서 시작한다.
-    const manifestPath = new URLSearchParams(window.location.search).get("admin") === "1"
-        ? "manifest-admin.json"
-        : "manifest.json";
-    const manifestLink = document.createElement("link");
-    manifestLink.rel = "manifest";
-    manifestLink.href = manifestPath;
-    document.head.appendChild(manifestLink);
-</script>
+<link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
 
 <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -70,29 +61,6 @@
 
     </a>
 
-    <div class="status-control" id="admin-auth" hidden>
-        <h3>관리자 인증</h3>
-        <div class="admin-update" id="authMessage"></div>
-        <button class="admin-auth-button" id="loginButton" type="button">
-            Google 로그인
-        </button>
-        <button class="admin-auth-button" id="logoutButton" type="button" hidden>
-            로그아웃
-        </button>
-    </div>
-
-    <div class="status-control" id="admin-panel" hidden>
-        <h3>현재 상태 변경</h3>
-        <div class="admin-update" id="adminUpdate"></div>
-        <div class="status-buttons">
-            <button onclick="changeStatus('available')">🟢 대기</button>
-            <button onclick="changeStatus('charging')">🔋 충전</button>
-            <button onclick="changeStatus('shopping')">🛒 쇼핑</button>
-            <button onclick="changeStatus('meal')">🍽️ 식사</button>
-            <button onclick="changeStatus('driving')">🚗 운전</button>
-        </div>
-    </div>
-
     <div class="qr-section">
 
         <div class="qr-title">
@@ -113,12 +81,6 @@
 
         ⚡ 충전 중일 수 있습니다.<br>
         확인 후 최대한 빠르게 이동하겠습니다.
-
-        <div id="app-version"></div>
-
-        <button id="install-button" hidden>
-            📲 앱 설치
-        </button>
 
     </div>
 
