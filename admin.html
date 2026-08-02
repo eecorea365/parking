@@ -19,24 +19,24 @@
 </head>
 <body>
 <div class="container">
-    <div class="logo">🚗</div>
+    <div class="vehicle-mark" aria-hidden="true"><i data-icon="car-front"></i></div>
     <div class="title">TESLA</div>
     <div class="subtitle">MODEL Y · 관리자</div>
 
     <div class="status" id="statusCard"></div>
     <div class="last-update" id="lastUpdate"></div>
 
-    <a id="callButton" class="button call" href="#">📞 전화하기</a>
-    <a id="smsButton" class="button sms" href="#">💬 문자 보내기</a>
+    <a id="callButton" class="button call" href="#"><i data-icon="phone"></i><span>전화하기</span></a>
+    <a id="smsButton" class="button sms" href="#"><i data-icon="message-circle"></i><span>문자 보내기</span></a>
 
     <div class="status-control" id="admin-auth" hidden>
         <h3>관리자 인증</h3>
         <div class="admin-update" id="authMessage"></div>
         <button class="admin-auth-button" id="loginButton" type="button">
-            Google 로그인
+            <i data-icon="log-in"></i><span>Google 로그인</span>
         </button>
         <button class="admin-auth-button" id="logoutButton" type="button" hidden>
-            로그아웃
+            <i data-icon="log-out"></i><span>로그아웃</span>
         </button>
     </div>
 
@@ -44,37 +44,38 @@
         <h3>현재 상태 변경</h3>
         <div class="admin-update" id="adminUpdate"></div>
         <div class="status-buttons">
-            <button onclick="changeStatus('available')">🟢 대기</button>
-            <button onclick="changeStatus('charging')">🔋 충전</button>
-            <button onclick="changeStatus('shopping')">🛒 쇼핑</button>
-            <button onclick="changeStatus('meal')">🍽️ 식사</button>
-            <button onclick="changeStatus('driving')">🚗 운전</button>
+            <button onclick="changeStatus('available')"><i data-icon="circle-check"></i>대기</button>
+            <button onclick="changeStatus('charging')"><i data-icon="battery-charging"></i>충전</button>
+            <button onclick="changeStatus('shopping')"><i data-icon="shopping-bag"></i>쇼핑</button>
+            <button onclick="changeStatus('meal')"><i data-icon="utensils"></i>식사</button>
+            <button onclick="changeStatus('driving')"><i data-icon="gauge"></i>운전</button>
         </div>
 
         <h3 class="admin-contact-title">현재 연락처 선택</h3>
         <div class="admin-update" id="contactUpdate"></div>
         <div class="status-buttons">
-            <button onclick="changeContact('owner')">👤 김범석</button>
-            <button onclick="changeContact('wife')">👤 배우자</button>
+            <button onclick="changeContact('owner')"><i data-icon="user-round"></i>김범석</button>
+            <button onclick="changeContact('wife')"><i data-icon="user-round"></i>최현진</button>
         </div>
     </div>
 
     <div class="qr-section">
-        <div class="qr-title">🚗 차량 연락 QR</div>
+        <div class="qr-title"><i data-icon="scan-line"></i>차량 연락 QR</div>
         <div id="qrcode"></div>
-        <div class="qr-guide">📷 QR을 스캔하여<br>연락해 주세요.</div>
+        <div class="qr-guide"><i data-icon="scan-line"></i> QR을 스캔하여<br>연락해 주세요.</div>
     </div>
 
     <div class="footer">
-        ⚡ 충전 중일 수 있습니다.<br>
+        <i data-icon="zap"></i> 충전 중일 수 있습니다.<br>
         확인 후 최대한 빠르게 이동하겠습니다.
         <div id="app-version"></div>
-        <button id="install-button" hidden>📲 앱 설치</button>
+        <button id="install-button" hidden><i data-icon="download"></i>앱 설치</button>
     </div>
 </div>
 
 <script src="js/config.js"></script>
 <script src="js/qrcode.min.js"></script>
+<script src="js/icons.js"></script>
 <script type="module" src="js/script.js"></script>
 </body>
 </html>

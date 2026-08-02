@@ -18,7 +18,7 @@ const config = {
             phone: "01072607368"
         },
         wife: {
-            name: "배우자",
+            name: "최현진",
             phone: "01074869907"
         }
     },
@@ -45,7 +45,7 @@ const config = {
 
         available: {
 
-            emoji: "🟢",
+            icon: "circle-check",
             title: "현재 차량 확인 가능",
             desc: "평균 응답시간 : 약 5분"
 
@@ -54,7 +54,7 @@ const config = {
 
         charging: {
 
-            emoji: "🔋",
+            icon: "battery-charging",
             title: "충전 중",
             desc: "충전이 끝나는 즉시 이동하겠습니다."
 
@@ -63,7 +63,7 @@ const config = {
 
         shopping: {
 
-            emoji: "🛒",
+            icon: "shopping-bag",
             title: "쇼핑 중",
             desc: "확인 후 빠르게 이동하겠습니다."
 
@@ -72,7 +72,7 @@ const config = {
 
         meal: {
 
-            emoji: "🍽️",
+            icon: "utensils",
             title: "식사 중",
             desc: "잠시만 기다려 주세요."
 
@@ -81,7 +81,7 @@ const config = {
 
         driving: {
 
-            emoji: "🚗",
+            icon: "gauge",
             title: "운전 중",
             desc: "안전한 곳에서 확인하겠습니다."
 

@@ -58,11 +58,13 @@ function renderContact() {
 // 상태 업데이트 및 렌더링 통합
 function updateStatus() {
     const current = config.statusMap[config.vehicle.status];
+    statusCard.className = `status ${config.vehicle.status}`;
     statusCard.innerHTML = `
-        <h3>${current.emoji} ${current.title}</h3>
+        <h3><i data-icon="${current.icon}" aria-hidden="true"></i><span>${current.title}</span></h3>
         <br>
         ${current.desc}
     `;
+    window.renderIcons?.(statusCard);
     renderContact();
     renderLastUpdated();
     renderAdminUpdated();
