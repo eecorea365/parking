@@ -8,7 +8,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Tesla QR Parking</title>
-<link rel="manifest" href="manifest.json">
+<script>
+    // 관리자 모드로 설치한 PWA는 관리자 URL에서 시작한다.
+    const manifestPath = new URLSearchParams(window.location.search).get("admin") === "1"
+        ? "manifest-admin.json"
+        : "manifest.json";
+    const manifestLink = document.createElement("link");
+    manifestLink.rel = "manifest";
+    manifestLink.href = manifestPath;
+    document.head.appendChild(manifestLink);
+</script>
 <meta name="theme-color" content="#000000">
 
 <link rel="apple-touch-icon" href="icons/icon-192.png">
