@@ -73,7 +73,7 @@ if ("serviceWorker" in navigator) {
         () => {
 
             navigator.serviceWorker
-            .register("./service-worker.js")
+            .register("./service-worker.js", { updateViaCache: "none" })
             .then(
                 registration => {
                     console.log(
@@ -184,7 +184,7 @@ function renderAdminUi(user) {
     authenticatedAdmin = isAdminPage && hasAdminAccess();
 
     if (adminPanel) {
-        adminPanel.style.display = authenticatedAdmin ? "block" : "none";
+        adminPanel.hidden = !authenticatedAdmin;
     }
 
     if (adminAuth) {

@@ -1,5 +1,5 @@
 // script.js 변경 사항을 기존 PWA 사용자에게도 즉시 배포한다.
-const CACHE_NAME = "tesla-qr-parking-v12.1.1";
+const CACHE_NAME = "tesla-qr-parking-v12.1.2";
 
 const FILES_TO_CACHE = [
     "./",
@@ -57,6 +57,28 @@ self.addEventListener("activate", event => {
 self.addEventListener(
     "fetch",
     event => {
+
+        const isAppShellRequest =
+            event.request.method === "GET" &&
+            event.request.url.startsWith(self.location.origin) &&
+            (event.request.mode === "navigate" || event.request.destination === "script");
+
+        if (isAppShellRequest) {
+            event.respondWith(
+                fetch(event.request)
+                    .then(response => {
+                        const cachedResponse = response.clone();
+                        event.waitUntil(
+                            caches.open(CACHE_NAME).then(cache => {
+                                return cache.put(event.request, cachedResponse);
+                            })
+                        );
+                        return response;
+                    })
+                    .catch(() => caches.match(event.request))
+            );
+            return;
+        }
 
         event.respondWith(
             caches.match(event.request)
