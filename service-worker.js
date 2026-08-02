@@ -1,4 +1,4 @@
-const CACHE_NAME = "model-y-life-v9-dev5";
+const CACHE_NAME = "tesla-qr-parking-v10.1";
 
 const FILES_TO_CACHE = [
     "./",

@@ -25,36 +25,28 @@ smsButton.href =
 
 
 
-function updateStatus(){
-
-    const current =
-    config.statusMap[
-        config.vehicle.status
-    ];
-
+// 상태 업데이트 및 렌더링 통합
+function updateStatus() {
+    const current = config.statusMap[config.vehicle.status];
     statusCard.innerHTML = `
         <h3>${current.emoji} ${current.title}</h3>
         <br>
         ${current.desc}
     `;
-
     renderLastUpdated();
-
+    renderAdminUpdated();
 }
 
-const savedStatus =
-    localStorage.getItem("vehicleStatus");
-
+// 초기화 시 localStorage에서 상태 로드
+const savedStatus = localStorage.getItem("vehicleStatus");
 if (savedStatus) {
-
     config.vehicle.status = savedStatus;
-
 }
-
 updateStatus();
-renderAdminUpdated();
 
 if ("serviceWorker" in navigator) {
+// ... existing code ...
+
 
     window.addEventListener(
         "load",
@@ -179,131 +171,57 @@ if (adminPanel) {
 }
 
 function updateLastUpdated() {
-
     const now = Date.now();
-
-    localStorage.setItem(
-        "lastUpdated",
-        now
-    );
-
+    localStorage.setItem("lastUpdated", now);
     renderLastUpdated();
-
+    renderAdminUpdated();
 }
+
+function getTimeText(diff) {
+    if (diff < 60) return "🕒 방금 전";
+    if (diff < 3600) return `🕒 ${Math.floor(diff / 60)}분 전`;
+    if (diff < 86400) return `🕒 ${Math.floor(diff / 3600)}시간 전`;
+    return `🕒 ${Math.floor(diff / 86400)}일 전`;
+}
+
 function renderLastUpdated() {
-
-    const saved =
-        localStorage.getItem("lastUpdated");
-
+    const saved = localStorage.getItem("lastUpdated");
     if (!saved) return;
 
-    const diff =
-        Math.floor(
-            (Date.now() - Number(saved))
-            /1000
-        );
-
-    let text;
-
-    if (diff < 60) {
-
-        text = "🕒 방금 전";
-
-    } else if (diff < 3600) {
-
-        text =
-            `🕒 ${Math.floor(diff/60)}분 전`;
-
-    } else if (diff < 86400) {
-
-        text =
-            `🕒 ${Math.floor(diff/3600)}시간 전`;
-
-    } else {
-
-        text =
-            `🕒 ${Math.floor(diff/86400)}일 전`;
-
+    const diff = Math.floor((Date.now() - Number(saved)) / 1000);
+    const lastUpdateEl = document.getElementById("lastUpdate");
+    if (lastUpdateEl) {
+        lastUpdateEl.textContent = getTimeText(diff);
     }
-
-    document
-        .getElementById("lastUpdate")
-        .textContent = text;
-
 }
-renderLastUpdated();
 
-setInterval(
-    renderLastUpdated,
-    60000
-);
+function renderAdminUpdated() {
+    const adminUpdate = document.getElementById("adminUpdate");
+    if (!adminUpdate) return;
+
+    const saved = localStorage.getItem("lastUpdated");
+    if (!saved) return;
+
+    const diff = Math.floor((Date.now() - Number(saved)) / 1000);
+    adminUpdate.textContent = "마지막 변경 : " + getTimeText(diff);
+}
+
 function changeStatus(newStatus) {
-
     config.vehicle.status = newStatus;
-
-    localStorage.setItem(
-        "vehicleStatus",
-        newStatus
-    );
-
+    localStorage.setItem("vehicleStatus", newStatus);
     updateLastUpdated();
-
     updateStatus();
-
 }
 
-const savedTime = localStorage.getItem("lastUpdated");
-
-if (savedTime) {
-
-    document.getElementById("lastUpdate").textContent =
-        "🕒 마지막 업데이트 : " + savedTime;
-
-}
-
+// 초기 실행 및 타이머
 if (!localStorage.getItem("lastUpdated")) {
-
     updateLastUpdated();
-
 }
 
 renderLastUpdated();
+renderAdminUpdated();
 
-setInterval(
-    renderLastUpdated,
-    60000
-);
-
-function renderAdminUpdated(){
-
-    const adminUpdate =
-        document.getElementById("adminUpdate");
-
-    if(!adminUpdate) return;
-
-    const saved =
-        localStorage.getItem("lastUpdated");
-
-    if(!saved) return;
-
-    const diff =
-        Math.floor(
-            (Date.now() - Number(saved)) / 1000
-        );
-
-    let text;
-
-    if(diff < 60){
-        text = "🕒 방금 전";
-    }
-    else if(diff < 3600){
-        text = `🕒 ${Math.floor(diff/60)}분 전`;
-    }
-    else{
-        text = `🕒 ${Math.floor(diff/3600)}시간 전`;
-    }
-
-    adminUpdate.textContent =
-        "마지막 변경 : " + text;
-
-}
+setInterval(() => {
+    renderLastUpdated();
+    renderAdminUpdated();
+}, 60000);

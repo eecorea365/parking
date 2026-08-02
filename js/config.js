@@ -1,22 +1,21 @@
 const APP_CONFIG = {
-    VERSION: "9.0-dev",
-    APP_NAME: "Model Y Life"
+    VERSION: "10.1",
+    APP_NAME: "Tesla QR Parking"
 };
 
 const config = {
-
     // 차량 소유자 정보
     owner: {
         name: "김범석",
         phone: "01072607368"
     },
 
-
     // 차량 정보
     vehicle: {
         model: "Tesla Model Y",
-        status: localStorage.getItem("vehicleStatus") || "charging"
+        status: "charging" // 기본값, script.js에서 localStorage 확인
     },
+
 
 
     // 기본 문자 메시지
