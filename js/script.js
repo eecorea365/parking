@@ -1,6 +1,21 @@
+import {
+    isFirebaseConfigured,
+    saveVehicleStatus,
+    subscribeToVehicleStatus
+} from "./firebase.js";
+import {
+    isAdmin as hasAdminAccess,
+    login,
+    logout,
+    onAuthStateChanged
+} from "./auth.js";
+
 // 관리자 여부 확인 (전역 변수)
 const params = new URLSearchParams(window.location.search);
-const isAdmin = params.get("admin") === "1";
+const isAdminPage = params.get("admin") === "1";
+const firebaseEnabled = isFirebaseConfigured();
+let authenticatedAdmin = false;
+let updateTimer;
 
 const phoneNumber = config.owner.phone;
 
@@ -43,8 +58,8 @@ function updateStatus() {
 }
 
 // 초기화 시 localStorage에서 상태 로드
-const savedStatus = localStorage.getItem("vehicleStatus");
-if (savedStatus) {
+const savedStatus = !firebaseEnabled && localStorage.getItem("vehicleStatus");
+if (savedStatus && config.statusMap[savedStatus]) {
     config.vehicle.status = savedStatus;
 }
 updateStatus();
@@ -96,7 +111,7 @@ window.addEventListener(
         deferredPrompt = event;
 
         // 관리자 모드일 때만 설치 버튼 표시
-        if (installButton && isAdmin) {
+        if (installButton && authenticatedAdmin) {
             installButton.hidden = false;
         }
 
@@ -137,26 +152,6 @@ if (installButton) {
 
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const version = document.getElementById("app-version");
-
-    if (version) {
-        if (isAdmin) {
-            version.textContent = `${APP_CONFIG.APP_NAME} ${APP_CONFIG.VERSION}`;
-            version.style.display = "block";
-        } else {
-            version.style.display = "none";
-        }
-    }
-
-    // 마지막 업데이트 시간 표시 제어 (관리자 전용)
-    const lastUpdateEl = document.getElementById("lastUpdate");
-    if (lastUpdateEl) {
-        lastUpdateEl.style.display = isAdmin ? "block" : "none";
-    }
-});
-
-
 // QR Code 생성
 const qrElement = document.getElementById("qrcode");
 
@@ -175,11 +170,86 @@ if (qrElement) {
 }
 
 
-// 관리자 모드 패널 제어
+// 관리자 인증 UI 제어
 const adminPanel = document.getElementById("admin-panel");
-if (adminPanel) {
-    adminPanel.style.display = isAdmin ? "block" : "none";
+const adminAuth = document.getElementById("admin-auth");
+const authMessage = document.getElementById("authMessage");
+const loginButton = document.getElementById("loginButton");
+const logoutButton = document.getElementById("logoutButton");
+const version = document.getElementById("app-version");
+const lastUpdateEl = document.getElementById("lastUpdate");
+
+function renderAdminUi(user) {
+    authenticatedAdmin = hasAdminAccess();
+
+    if (adminPanel) {
+        adminPanel.style.display = authenticatedAdmin ? "block" : "none";
+    }
+
+    if (adminAuth) {
+        adminAuth.hidden = !isAdminPage;
+    }
+
+    if (authMessage && isAdminPage) {
+        authMessage.textContent = user
+            ? (authenticatedAdmin ? `${user.email} 관리자 로그인됨` : "관리자 권한이 없는 계정입니다.")
+            : "Google 계정으로 로그인해 주세요.";
+    }
+
+    if (loginButton) loginButton.hidden = !isAdminPage || Boolean(user);
+    if (logoutButton) logoutButton.hidden = !isAdminPage || !user;
+
+    if (version) {
+        version.textContent = authenticatedAdmin
+            ? `${APP_CONFIG.APP_NAME} ${APP_CONFIG.VERSION}`
+            : "";
+        version.style.display = authenticatedAdmin ? "block" : "none";
+    }
+
+    if (lastUpdateEl) {
+        lastUpdateEl.style.display = authenticatedAdmin ? "block" : "none";
+    }
+
+    if (authenticatedAdmin && !updateTimer) {
+        renderLastUpdated();
+        renderAdminUpdated();
+        updateTimer = setInterval(() => {
+            renderLastUpdated();
+            renderAdminUpdated();
+        }, 60000);
+    } else if (!authenticatedAdmin && updateTimer) {
+        clearInterval(updateTimer);
+        updateTimer = undefined;
+    }
+
+    if (installButton && deferredPrompt) {
+        installButton.hidden = !authenticatedAdmin;
+    }
 }
+
+if (loginButton) {
+    loginButton.addEventListener("click", async () => {
+        try {
+            await login();
+        } catch (error) {
+            console.error("Google 로그인 실패", error);
+            alert("로그인하지 못했습니다. Firebase Authentication 설정을 확인해 주세요.");
+        }
+    });
+}
+
+if (logoutButton) {
+    logoutButton.addEventListener("click", async () => {
+        try {
+            await logout();
+        } catch (error) {
+            console.error("로그아웃 실패", error);
+        }
+    });
+}
+
+renderAdminUi(null);
+onAuthStateChanged(renderAdminUi);
 
 
 function updateLastUpdated() {
@@ -187,6 +257,20 @@ function updateLastUpdated() {
     localStorage.setItem("lastUpdated", now);
     renderLastUpdated();
     renderAdminUpdated();
+}
+
+function applyFirebaseStatus(data) {
+    if (!data) return;
+
+    if (config.statusMap[data.status]) {
+        config.vehicle.status = data.status;
+    }
+
+    if (data.updatedAt && typeof data.updatedAt.toMillis === "function") {
+        localStorage.setItem("lastUpdated", data.updatedAt.toMillis());
+    }
+
+    updateStatus();
 }
 
 function getTimeText(diff) {
@@ -218,24 +302,36 @@ function renderAdminUpdated() {
     adminUpdate.textContent = "마지막 변경 : " + getTimeText(diff);
 }
 
-function changeStatus(newStatus) {
+async function changeStatus(newStatus) {
+    if (!authenticatedAdmin || !config.statusMap[newStatus]) return;
+
+    if (firebaseEnabled) {
+        try {
+            await saveVehicleStatus(newStatus);
+        } catch (error) {
+            console.error("Firebase 상태 저장 실패", error);
+            alert("상태를 저장하지 못했습니다. Firebase 설정과 연결을 확인해 주세요.");
+        }
+        return;
+    }
+
     config.vehicle.status = newStatus;
     localStorage.setItem("vehicleStatus", newStatus);
     updateLastUpdated();
     updateStatus();
 }
 
+// 인라인 관리자 버튼에서 호출할 수 있도록 공개한다.
+window.changeStatus = changeStatus;
+
 // 초기 실행 및 타이머
-if (!localStorage.getItem("lastUpdated")) {
+if (!firebaseEnabled && !localStorage.getItem("lastUpdated")) {
     updateLastUpdated();
 }
 
-if (isAdmin) {
-    renderLastUpdated();
-    renderAdminUpdated();
-
-    setInterval(() => {
-        renderLastUpdated();
-        renderAdminUpdated();
-    }, 60000);
+if (firebaseEnabled) {
+    subscribeToVehicleStatus(
+        applyFirebaseStatus,
+        error => console.error("Firebase 상태 구독 실패", error)
+    );
 }

@@ -63,9 +63,18 @@
 
     </a>
 
-    
+    <div class="status-control" id="admin-auth" hidden>
+        <h3>관리자 인증</h3>
+        <div class="admin-update" id="authMessage"></div>
+        <button class="admin-auth-button" id="loginButton" type="button">
+            Google 로그인
+        </button>
+        <button class="admin-auth-button" id="logoutButton" type="button" hidden>
+            로그아웃
+        </button>
+    </div>
 
-                <div class="status-control" id="admin-panel">
+    <div class="status-control" id="admin-panel">
         <h3>현재 상태 변경</h3>
         <div class="admin-update" id="adminUpdate"></div>
         <div class="status-buttons">
@@ -112,7 +121,7 @@
 
 <script src="js/qrcode.min.js"></script>
 
-<script src="js/script.js"></script>
+<script type="module" src="js/script.js"></script>
 
 </body>
 

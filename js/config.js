@@ -1,9 +1,16 @@
 const APP_CONFIG = {
-    VERSION: "10.1",
+    VERSION: "12.1",
     APP_NAME: "Tesla QR Parking"
 };
 
 const config = {
+    // 관리자 인증 설정
+    auth: {
+        adminEmails: [
+            "eecorea@gmail.com"
+        ]
+    },
+
     // 차량 소유자 정보
     owner: {
         name: "김범석",
