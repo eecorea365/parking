@@ -1,3 +1,5 @@
+---
+---
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -8,6 +10,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Tesla QR Parking</title>
+<script>
+    window.BUILD_INFO = {
+        commit: "{{ site.github.build_revision | slice: 0, 7 }}"
+    };
+</script>
 <script>
     // 관리자 모드로 설치한 PWA는 관리자 URL에서 시작한다.
     const manifestPath = new URLSearchParams(window.location.search).get("admin") === "1"

@@ -14,6 +14,10 @@ import {
 const params = new URLSearchParams(window.location.search);
 const isAdminPage = params.get("admin") === "1";
 const firebaseEnabled = isFirebaseConfigured();
+const buildCommit = window.BUILD_INFO && window.BUILD_INFO.commit;
+const buildLabel = /^[0-9a-f]{7,40}$/i.test(buildCommit)
+    ? ` · ${buildCommit.slice(0, 7)}`
+    : "";
 let authenticatedAdmin = false;
 let updateTimer;
 
@@ -202,7 +206,7 @@ function renderAdminUi(user) {
 
     if (version) {
         version.textContent = authenticatedAdmin
-            ? `${APP_CONFIG.APP_NAME} ${APP_CONFIG.VERSION}`
+            ? `${APP_CONFIG.APP_NAME} ${APP_CONFIG.VERSION}${buildLabel}`
             : "";
         version.style.display = authenticatedAdmin ? "block" : "none";
     }
