@@ -1,5 +1,5 @@
 // script.js 변경 사항을 기존 PWA 사용자에게도 즉시 배포한다.
-const CACHE_NAME = "tesla-qr-parking-v12.1";
+const CACHE_NAME = "tesla-qr-parking-v12.1.1";
 
 const FILES_TO_CACHE = [
     "./",

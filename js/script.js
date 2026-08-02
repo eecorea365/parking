@@ -180,7 +180,8 @@ const version = document.getElementById("app-version");
 const lastUpdateEl = document.getElementById("lastUpdate");
 
 function renderAdminUi(user) {
-    authenticatedAdmin = hasAdminAccess();
+    // 인증은 권한을 확인하고, 관리자 URL은 관리 화면 진입을 결정한다.
+    authenticatedAdmin = isAdminPage && hasAdminAccess();
 
     if (adminPanel) {
         adminPanel.style.display = authenticatedAdmin ? "block" : "none";
