@@ -14,7 +14,10 @@
         "log-in": '<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5M15 12H3"/>',
         "log-out": '<path d="M10 17l5-5-5-5M15 12H3"/><path d="M21 19V5a2 2 0 0 0-2-2h-4"/>',
         download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',
-        zap: '<path d="M4 14a1 1 0 0 1-.78-1.63l9-11A.5.5 0 0 1 13 1.7l-2 6.3H20a1 1 0 0 1 .78 1.63l-9 11A.5.5 0 0 1 11 20.3l2-6.3Z"/>'
+        zap: '<path d="M4 14a1 1 0 0 1-.78-1.63l9-11A.5.5 0 0 1 13 1.7l-2 6.3H20a1 1 0 0 1 .78 1.63l-9 11A.5.5 0 0 1 11 20.3l2-6.3Z"/>',
+        house: '<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/>',
+        briefcase: '<path d="M16 20V4a2 2 0 0 0-2-2H10a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 12h20"/><path d="M10 12v2h4v-2"/>',
+        clock: '<circle cx="12" cy="12" r="10"/><path d="M12 7v5l3 3"/>'
     };
 
     window.renderIcons = function (root) {

@@ -43,11 +43,29 @@
         <h3>현재 상태 변경</h3>
         <div class="admin-update" id="adminUpdate"></div>
         <div class="status-buttons">
-            <button onclick="changeStatus('available')"><i data-icon="circle-check"></i>대기</button>
-            <button onclick="changeStatus('charging')"><i data-icon="battery-charging"></i>충전</button>
-            <button onclick="changeStatus('shopping')"><i data-icon="shopping-bag"></i>쇼핑</button>
-            <button onclick="changeStatus('meal')"><i data-icon="utensils"></i>식사</button>
-            <button onclick="changeStatus('driving')"><i data-icon="gauge"></i>운전</button>
+            <button onclick="changeStatus('parked')">
+                <i data-icon="house"></i>주차
+            </button>
+
+            <button onclick="changeStatus('work')">
+                <i data-icon="briefcase"></i>업무
+            </button>
+
+            <button onclick="changeStatus('away')">
+                <i data-icon="clock"></i>자리비움
+            </button>
+
+            <button onclick="changeStatus('meal')">
+                <i data-icon="utensils"></i>식사
+            </button>
+
+            <button onclick="changeStatus('charging')">
+                <i data-icon="battery-charging"></i>충전
+            </button>
+
+            <button onclick="changeStatus('shopping')">
+                <i data-icon="shopping-bag"></i>쇼핑
+            </button>
         </div>
 
         <h3 class="admin-contact-title">현재 연락처 선택</h3>

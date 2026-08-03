@@ -40,50 +40,53 @@ const config = {
     },
 
 
-    // 차량 상태 목록
     statusMap: {
 
-        available: {
+        parked: {
 
-            icon: "circle-check",
-            title: "현재 차량 확인 가능",
-            desc: "평균 응답시간 : 약 5분"
-
-        },
-
-
-        charging: {
-
-            icon: "battery-charging",
-            title: "충전 중",
-            desc: "충전이 끝나는 즉시 이동하겠습니다."
+            icon: "house",
+            title: "주차 중",
+            desc: "차량 확인이 필요한 경우 연락 부탁드립니다."
 
         },
 
+        work: {
 
-        shopping: {
-
-            icon: "shopping-bag",
-            title: "쇼핑 중",
-            desc: "확인 후 빠르게 이동하겠습니다."
+            icon: "briefcase",
+            title: "업무 중",
+            desc: "업무 중입니다. 확인 후 연락드리겠습니다."
 
         },
 
+        away: {
+
+            icon: "clock",
+            title: "잠시 자리비움",
+            desc: "잠시 자리를 비웠습니다. 확인 후 연락드리겠습니다."
+
+        },
 
         meal: {
 
             icon: "utensils",
             title: "식사 중",
-            desc: "잠시만 기다려 주세요."
+            desc: "식사 중입니다. 확인 후 연락드리겠습니다."
 
         },
 
+        charging: {
 
-        driving: {
+            icon: "battery-charging",
+            title: "충전 중",
+            desc: "충전 중입니다. 확인 후 연락드리겠습니다."
 
-            icon: "gauge",
-            title: "운전 중",
-            desc: "안전한 곳에서 확인하겠습니다."
+        },
+
+        shopping: {
+
+            icon: "shopping-bag",
+            title: "쇼핑 중",
+            desc: "쇼핑 중입니다. 확인 후 연락드리겠습니다."
 
         }
 
