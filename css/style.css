@@ -461,8 +461,8 @@ body{
 .admin-auth-button, #install-button { align-items: center; justify-content: center; gap: 8px; }
 .qr-guide svg, .footer svg { width: 16px; height: 16px; vertical-align: -3px; stroke-width: 2; }
 .status.parked h3 svg { color: #2ecc71; }
-.status.charging h3 svg { color: #60a5fa; }
-.status.shopping h3 svg { color: #f39c12; }
-.status.meal h3 svg { color: #c084fc; }
-.status.work h3 svg { color: #5d447a; }
-.status.away h3 svg { color: #924f5a; }
+.status.charging h3 svg { color: #06b6d4; }
+.status.shopping h3 svg { color: #f59e0b; }
+.status.meal h3 svg { color: #ef4444; }
+.status.work h3 svg { color: #3b82f6; }
+.status.away h3 svg { color: #a855f7; }
