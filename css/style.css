@@ -140,7 +140,7 @@ body{
 
 }
 
-.status.available {
+.status.park {
 
     border-left: 6px solid #2ecc71;
 
@@ -148,25 +148,31 @@ body{
 
 .status.charging {
 
-    border-left: 6px solid #3498db;
+    border-left: 6px solid #06b6d4;
 
 }
 
 .status.shopping {
 
-    border-left: 6px solid #f39c12;
+    border-left: 6px solid #f59e0b;
 
 }
 
 .status.meal {
 
-    border-left: 6px solid #9b59b6;
+    border-left: 6px solid #ef4444;
 
 }
 
-.status.driving {
+.status.work {
 
-    border-left: 6px solid #95a5a6;
+    border-left: 4px solid #3b82f6;
+
+}
+
+.status.away {
+
+    border-left: 4px solid #a855f7;
 
 }
 
